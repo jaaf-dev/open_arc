@@ -1,0 +1,50 @@
+services:
+  openarc:
+    image: ghcr.io/searchsavior/openarc:latest
+    container_name: openarc_server
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    networks:
+      - ai_network
+    devices:
+      - "/dev/dri:/dev/dri"
+    volumes:
+      - ./openarc_models:/models
+      - ./openarc_data:/persist
+    environment:
+      - OPENARC_API_KEY=${OPENARC_API_KEY}
+      - OPENARC_AUTOLOAD_MODEL=${OPENARC_AUTOLOAD_MODEL:-}
+    env_file:
+      - .env
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/v1/models"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:main
+    container_name: open_webui
+    restart: unless-stopped
+    ports:
+      - "3000:8080"
+    networks:
+      - ai_network
+    environment:
+      - OPENAI_API_BASE_URL=http://openarc:8000/v1
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - WEBUI_SECRET_KEY=${WEBUI_SECRET_KEY}
+      - AIOHTTP_CLIENT_TIMEOUT=120
+    env_file:
+      - .env
+    volumes:
+      - ./open_webui_data:/app/backend/data   # bind mount
+    depends_on:
+      openarc:
+        condition: service_healthy
+
+networks:
+  ai_network:
+    driver: bridge
+    name: openarc_webui_net

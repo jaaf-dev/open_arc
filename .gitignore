@@ -1,0 +1,48 @@
+# --- Secretos y entorno local ---
+.env
+.env.*
+!.env.example
+
+# --- Modelos LLM (descargar dentro del contenedor, no versionar) ---
+openarc_models/**
+!openarc_models/.gitkeep
+
+# --- Datos persistentes de OpenArc (config generada en runtime) ---
+openarc_data/**
+!openarc_data/.gitkeep
+
+# --- Datos de Open WebUI (DB, usuarios, cachés, embeddings) ---
+open_webui_data/**
+!open_webui_data/.gitkeep
+
+# --- Cachés Hugging Face / descargas ---
+.cache/
+**/.cache/
+*.metadata
+
+# --- Pesos y binarios de modelos ---
+*.bin
+*.safetensors
+*.gguf
+*.onnx
+*.pt
+*.pth
+
+# --- Logs ---
+*.log
+logs/
+
+# --- SO / editor ---
+.DS_Store
+Thumbs.db
+*~
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# --- Python (por si se añaden scripts locales) ---
+__pycache__/
+*.py[cod]
+.venv/
+venv/
