@@ -15,6 +15,11 @@ openarc_data/**
 open_webui_data/**
 !open_webui_data/.gitkeep
 
+# --- OpenCode local (no es parte de la guía del repo) ---
+.opencode/
+opencode.json
+AGENTS.md
+
 # --- Cachés Hugging Face / descargas ---
 .cache/
 **/.cache/
