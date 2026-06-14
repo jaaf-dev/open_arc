@@ -14,7 +14,7 @@ services:
       - ./openarc_data:/persist
     environment:
       - OPENARC_API_KEY=${OPENARC_API_KEY}
-      - OPENARC_AUTOLOAD_MODEL=${OPENARC_AUTOLOAD_MODEL:-qwen3-4b}
+      - OPENARC_AUTOLOAD_MODEL=${OPENARC_AUTOLOAD_MODEL:-qwen2.5-7b-instruct}
     env_file:
       - .env
     healthcheck:
